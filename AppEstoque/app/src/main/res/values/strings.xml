@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Estoque</string>
+    <string name="qtd">Quantidade</string>
+    <string name="qtdmin">Quantidade mínima</string>
+    <string name="preco">Preço</string>
+    <string name="nome">Nome</string>
+</resources>
