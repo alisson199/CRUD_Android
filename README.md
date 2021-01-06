@@ -25,3 +25,6 @@ Content Table
   - [ ] Transition Screen
   - [ ] Design
   
+  ### Tecnologies
+  
+  <img src="https://img.shields.io/badge/-Java-orange"/> <img src = "https://img.shields.io/badge/-Android%20Studio-blue"/>
