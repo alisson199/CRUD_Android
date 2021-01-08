@@ -1,6 +1,8 @@
 package com.example.appestoque;
 
-public class Produtos {
+import java.io.Serializable;
+
+public class Produtos implements Serializable {
 
     private int id;
     private String nome;

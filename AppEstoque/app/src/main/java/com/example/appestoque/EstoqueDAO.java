@@ -114,7 +114,7 @@ public class EstoqueDAO {
         values.put( "qt_produto", p.getQt_produtos() );
         values.put( "qt_min_produto", p.getQt_min_estoque() );
         values.put( "valor", p.getValor() );
-        long resultado = banco.update( "tb_listacompras", values, "id = ?",
+        long resultado = banco.update( "tb_listacompras", values, "lcid = ?",
                 new String []{
                         Integer.toString( p.getId() )
                 });

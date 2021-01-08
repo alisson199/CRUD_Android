@@ -61,6 +61,8 @@ public class ComprasActivity extends AppCompatActivity {
         for(int i = 0; i < filtroprodutos.size(); i ++) {
             dao.inserirEstoque( filtroprodutos.get( i ) );
         }
+        valortotal =0;
+        atualizaTotal();
         dao.deletarTodaCompras();
         Intent it = new Intent(this, EstoqueActivity.class);
         startActivity( it );
@@ -69,11 +71,12 @@ public class ComprasActivity extends AppCompatActivity {
     @Override
     public void onResume () {
         super.onResume();
-
         produtos = dao.obterCompras();
         filtroprodutos.clear();
         filtroprodutos.addAll( produtos );
         listView.invalidateViews();
+        valortotal = 0;
+        atualizaTotal();
     }
     // ********** Sobre o menu de contexto
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
@@ -112,7 +115,7 @@ public class ComprasActivity extends AppCompatActivity {
 
         Produtos produtoAtualizar = filtroprodutos.get(menuInfo.position);
         Intent it = new Intent(this, CadastrarActivity.class);
-        it.putExtra( "produto", (Serializable) produtoAtualizar );
+        it.putExtra( "produto", produtoAtualizar );
         startActivity( it );
     }
 

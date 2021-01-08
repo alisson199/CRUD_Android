@@ -58,7 +58,7 @@ public class CadastrarActivity extends AppCompatActivity {
             produto.setQt_min_estoque( quantidadeMin.getText().toString() );
             produto.setValor( preco.getText().toString() );
 
-            dao.inserirCompras(produto);
+            dao.atualizarCompra(produto);
             Toast.makeText( this, "Produto Atualizado." , Toast.LENGTH_SHORT ).show();
         }
 
