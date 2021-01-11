@@ -4,4 +4,6 @@
 
     <item android:title="Excluir"
         android:onClick="deletar"/>
+    <item android:title="Retirar uma unidade"
+        android:onClick="retirarUn"/>
 </menu>

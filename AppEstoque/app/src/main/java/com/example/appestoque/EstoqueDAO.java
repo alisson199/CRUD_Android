@@ -69,7 +69,23 @@ public class EstoqueDAO {
 
     public List<Produtos> obterCompras () {
         List<Produtos> produtos = new ArrayList <>();
-        Cursor cursor = banco.query( "tb_ListaCompras", new String[] { "lcid", "nm_produto",
+        //************************* tb Estoque
+        Cursor cursor = banco.query( "tb_produtos", new String[]{"id", "nm_produtos", "qt_produtos", "qt_min_produtos", "preco"},
+                "qt_produtos < qt_min_produtos", null, null, null, null);
+
+        while(cursor.moveToNext()){
+            Produtos p = new Produtos();
+            p.setId( cursor.getInt( 0 ) );
+            p.setNome( cursor.getString( 1 ) );
+            p.setQt_produtos( cursor.getString( 2 ) );
+            p.setQt_min_estoque( cursor.getString( 3 ) );
+            p.setValor( cursor.getString( 4 ));
+            produtos.add( p );
+        }
+        cursor.close();
+
+        //********************** tb Lista Compras
+        cursor = banco.query( "tb_ListaCompras", new String[] { "lcid", "nm_produto",
                         "qt_produto", "qt_min_produto", "valor"},
                 null, null, null, null, null);
 
@@ -107,29 +123,41 @@ public class EstoqueDAO {
             return "Produto excluído com sucesso";
     }
 
-    public String atualizarCompra (Produtos p) {
+    public void atualizarCompra (Produtos p) {
         ContentValues values = new ContentValues();
 
         values.put( "nm_produto", p.getNome() );
         values.put( "qt_produto", p.getQt_produtos() );
         values.put( "qt_min_produto", p.getQt_min_estoque() );
         values.put( "valor", p.getValor() );
-        long resultado = banco.update( "tb_listacompras", values, "lcid = ?",
+        banco.update( "tb_listacompras", values, "lcid = ?",
                 new String []{
                         Integer.toString( p.getId() )
                 });
-
-        if (resultado == -1)
-            return "Erro ao atualizar produto";
-        else
-            return "Produto atualizado com sucesso";
     }
 
     public void deletarTodaCompras () {
+
         banco.execSQL( "DELETE FROM tb_listacompras" );
     }
 
     public void deletarTodoEstoque () {
+
         banco.execSQL( "DELETE FROM tb_produtos" );
     }
+
+    public void retirarUnEstoque (Produtos p) {
+        ContentValues values = new ContentValues();
+
+        //values.put( "nm_produtos", p.getNome() );
+        values.put( "qt_produtos", p.getQt_produtos() );
+        //values.put( "qt_min_produtos", p.getQt_min_estoque() );
+        //values.put( "preco", p.getValor() );
+        banco.update( "tb_produtos", values, "id = ?",
+                new String []{
+                        Integer.toString( p.getId() )
+                });
+
+    }
+
 }

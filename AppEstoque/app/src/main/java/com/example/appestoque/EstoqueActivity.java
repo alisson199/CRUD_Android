@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,6 +65,31 @@ public class EstoqueActivity extends AppCompatActivity {
                 } ).create();
         dialog.show();
     }
+
+    public void retirarUn (MenuItem item) {
+        AdapterView.AdapterContextMenuInfo menuInfo =
+                (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+
+        Produtos produtoRetirar = filtroprodutos.get( menuInfo.position );
+
+        Toast.makeText( this, "Nome do produto: " + produtoRetirar.getNome() ,Toast.LENGTH_SHORT ).show();
+
+        int diminui = Integer.parseInt( produtoRetirar.getQt_produtos() ) -1;
+
+        if (diminui < 0)
+            diminui = 0;
+
+
+
+        produtoRetirar.setQt_produtos( Integer.toString( diminui ) );
+        dao.retirarUnEstoque( produtoRetirar );
+
+        produtos = dao.obterEstoque();
+        filtroprodutos.clear();
+        filtroprodutos.addAll( produtos );
+        listView.invalidateViews();
+
+    }
     public void deletartudo (View v) {
 
         AlertDialog dialog = new AlertDialog.Builder(this)
@@ -81,6 +107,16 @@ public class EstoqueActivity extends AppCompatActivity {
                 } ).create();
         dialog.show();
     }
+
+    @Override
+    public void onResume () {
+        super.onResume();
+        produtos = dao.obterEstoque();
+        filtroprodutos.clear();
+        filtroprodutos.addAll( produtos );
+        listView.invalidateViews();
+    }
+
 
 
 }
