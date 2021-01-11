@@ -28,28 +28,36 @@ public class EstoqueActivity extends AppCompatActivity {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_estoque );
 
+        //Capturando a list view
         listView = findViewById( R.id.listEstoque );
+        //Instanciando um dao
         dao = new EstoqueDAO( this );
+        //Capturando estoque do dao
         produtos = dao.obterEstoque();
+        //Criando um menu de contexto
         registerForContextMenu( listView );
-
+        //Adicionando todos os produtos obtidos do dao, ao filtro
         filtroprodutos.addAll( produtos );
+        //Adaptando a matriz para inserir na lista de uma maneira mais visual
         ProdutosAdapter adaptador = new ProdutosAdapter( filtroprodutos, this  );
         listView.setAdapter( adaptador );
     }
 
+    //Método para inflar o menu ao pressionar a tela -- faz aparecer o menu...
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu( menu, v, menuInfo );
         MenuInflater i = getMenuInflater();
         i.inflate( R.menu.menu_contexto_deletar, menu );
     }
 
+    //Método para deletar um produto do estoque
     public void deletar (MenuItem item) {
         AdapterView.AdapterContextMenuInfo menuInfo =
                 (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 
         Produtos produtoExcluir = filtroprodutos.get(menuInfo.position);
 
+        //Confirmando se o usuario realmente deseja deletar o produto
         AlertDialog dialog = new AlertDialog.Builder(this)
                 .setTitle( "Atenção!!" )
                 .setMessage( "Realmente deseja excluir o produto?" )
@@ -57,6 +65,7 @@ public class EstoqueActivity extends AppCompatActivity {
                 .setPositiveButton( "Sim", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick (DialogInterface dialogInterface, int i) {
+                        //Se o usuario clicar em sim, remove o produto da lista e chama o dao, chama o invalidate view para atualizar a lista
                         filtroprodutos.remove( produtoExcluir );
                         produtos.remove( produtoExcluir );
                         dao.excluirEstoque( produtoExcluir );
