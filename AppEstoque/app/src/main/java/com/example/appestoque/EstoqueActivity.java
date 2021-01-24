@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -25,21 +27,29 @@ public class EstoqueActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate (Bundle savedInstanceState) {
+
+        Log.d("meu app", "Mudei activity porra");
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_estoque );
 
         //Capturando a list view
         listView = findViewById( R.id.listEstoque );
+        Log.d("meu app", "Capturando list view porra");
         //Instanciando um dao
         dao = new EstoqueDAO( this );
+        Log.d("meu app", "instancia dao porra");
         //Capturando estoque do dao
         produtos = dao.obterEstoque();
+        Log.d("meu app", "capt estoque dao porra");
         //Criando um menu de contexto
         registerForContextMenu( listView );
+        Log.d("meu app", "menu contexto porra");
         //Adicionando todos os produtos obtidos do dao, ao filtro
         filtroprodutos.addAll( produtos );
+        Log.d("meu app", "re adicionando a porra toda.");
         //Adaptando a matriz para inserir na lista de uma maneira mais visual
         ProdutosAdapter adaptador = new ProdutosAdapter( filtroprodutos, this  );
+        Log.d("meu app", "adaptando porra");
         listView.setAdapter( adaptador );
     }
 
@@ -100,7 +110,7 @@ public class EstoqueActivity extends AppCompatActivity {
 
     }
     public void deletartudo (View v) {
-
+/*
         AlertDialog dialog = new AlertDialog.Builder(this)
                 .setTitle( "Atenção!!" )
                 .setMessage( "Realmente deseja excluir todos os produtos do estoque?" )
@@ -114,7 +124,9 @@ public class EstoqueActivity extends AppCompatActivity {
                         listView.invalidateViews();
                     }
                 } ).create();
-        dialog.show();
+        dialog.show();*/
+        Intent it = new Intent(this, RelatorioActivity.class);
+        startActivity( it );
     }
 
     @Override

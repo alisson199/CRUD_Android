@@ -9,6 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppEstoque">
+        <activity android:name=".RelatorioMensalActivity"></activity>
+        <activity android:name=".RelatorioActivity" />
         <activity android:name=".ComprasActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -17,7 +19,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".EstoqueActivity" />
-        <activity android:name=".CadastrarActivity"/>
+        <activity android:name=".CadastrarActivity" />
     </application>
 
 </manifest>

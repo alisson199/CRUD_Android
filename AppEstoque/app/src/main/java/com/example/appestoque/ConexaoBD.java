@@ -9,7 +9,7 @@ import androidx.annotation.Nullable;
 public class ConexaoBD extends SQLiteOpenHelper {
 
     private static final String name = "banco.db";
-    private static final int version = 1;
+    private static final int version = 5;
 
     public ConexaoBD (@Nullable Context context) {
         super( context, name, null, version );
@@ -31,6 +31,13 @@ public class ConexaoBD extends SQLiteOpenHelper {
                 "qt_min_produtos varchar(50), " +
                 "preco varchar(50))");
 
+        db.execSQL( "CREATE TABLE tb_relatorios (" +
+                "rid integer PRIMARY KEY AUTOINCREMENT," +
+                "nm_prod varchar(50), " +
+                "qt_prod varchar(50), " +
+                "qt_min_prod varchar(50), " +
+                "vlr varchar(50), " +
+                "data varchar(30))");
 
     }
 
@@ -40,6 +47,9 @@ public class ConexaoBD extends SQLiteOpenHelper {
         db.execSQL(sql);
         sql = "DROP TABLE IF EXISTS tb_listacompras";
         db.execSQL(sql);
+        sql = "DROP TABLE IF EXISTS tb_relatorios";
+        db.execSQL(sql);
+
         onCreate(db);
     }
 }

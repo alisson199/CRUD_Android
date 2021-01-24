@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -18,7 +19,10 @@ import android.widget.Toast;
 
 import java.io.Serializable;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class ComprasActivity extends AppCompatActivity {
@@ -58,11 +62,13 @@ public class ComprasActivity extends AppCompatActivity {
     }
 
     public void comprar (View v) {
+        String data = getTime( "YYYY/MM" );
+
         for(int i = 0; i < filtroprodutos.size(); i ++) {
             dao.inserirEstoque( filtroprodutos.get( i ) );
+            dao.inserirRelatorios( filtroprodutos.get( i ), data );
         }
-        valortotal =0;
-        atualizaTotal();
+        valortotal = 0;
         dao.deletarTodaCompras();
         Intent it = new Intent(this, EstoqueActivity.class);
         startActivity( it );
@@ -121,9 +127,23 @@ public class ComprasActivity extends AppCompatActivity {
 
     private void atualizaTotal () {
         for(int i = 0; i < filtroprodutos.size(); i ++) {
-            valortotal += Double.parseDouble( filtroprodutos.get( i ).getValor() );
+            valortotal += Double.parseDouble( filtroprodutos.get( i ).getValor() ) * Double.parseDouble( filtroprodutos.get( i ).getQt_produtos() ) ;
         }
         String moeda = new DecimalFormat("#,##0.00").format(valortotal );
         totpreco.setText( "R$" + moeda );
+    }
+
+    private static String getTime(String format){
+
+        if (format.isEmpty()) {
+            throw new NullPointerException("A pattern não pode ser NULL!");
+        }
+
+        Calendar calendar = Calendar.getInstance();
+
+        SimpleDateFormat formato = new SimpleDateFormat(format);
+        Date data = calendar.getTime();
+
+        return formato.format(data);
     }
 }

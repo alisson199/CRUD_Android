@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RelatorioActivity">
+
+    <Button
+        android:id="@+id/btn_fev"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="FEV"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lbl_ano" />
+
+    <Button
+        android:id="@+id/btn_mar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="20dp"
+        android:text="MAR"
+        app:layout_constraintStart_toEndOf="@+id/btn_fev"
+        app:layout_constraintTop_toBottomOf="@+id/lbl_ano" />
+
+    <Button
+        android:id="@+id/btn_jul"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="JUL"
+        app:layout_constraintStart_toStartOf="@+id/btn_abr"
+        app:layout_constraintTop_toBottomOf="@+id/btn_abr" />
+
+    <Button
+        android:id="@+id/btn_jan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="mes1"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:text="JAN"
+        app:layout_constraintEnd_toStartOf="@+id/btn_fev"
+        app:layout_constraintTop_toBottomOf="@+id/lbl_ano" />
+
+    <Button
+        android:id="@+id/btn_dez"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="DEZ"
+        app:layout_constraintStart_toStartOf="@+id/btn_set"
+        app:layout_constraintTop_toBottomOf="@+id/btn_set" />
+
+    <Button
+        android:id="@+id/btn_set"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="SET"
+        app:layout_constraintStart_toStartOf="@+id/btn_jun"
+        app:layout_constraintTop_toBottomOf="@+id/btn_jun" />
+
+    <Button
+        android:id="@+id/btn_out"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="OUT"
+        app:layout_constraintStart_toStartOf="@+id/btn_jul"
+        app:layout_constraintTop_toBottomOf="@+id/btn_jul" />
+
+    <Button
+        android:id="@+id/btn_abr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="ABR"
+        app:layout_constraintStart_toStartOf="@+id/btn_jan"
+        app:layout_constraintTop_toBottomOf="@+id/btn_jan" />
+
+    <Button
+        android:id="@+id/btn_jun"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="JUN"
+        app:layout_constraintStart_toStartOf="@+id/btn_mar"
+        app:layout_constraintTop_toBottomOf="@+id/btn_mar" />
+
+    <Button
+        android:id="@+id/btn_ago"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="AGO"
+        app:layout_constraintStart_toStartOf="@+id/btn_mai"
+        app:layout_constraintTop_toBottomOf="@+id/btn_mai" />
+
+    <Button
+        android:id="@+id/btn_mai"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="MAI"
+        app:layout_constraintStart_toStartOf="@+id/btn_fev"
+        app:layout_constraintTop_toBottomOf="@+id/btn_fev" />
+
+    <Button
+        android:id="@+id/btn_nov"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="NOV"
+        app:layout_constraintStart_toStartOf="@+id/btn_ago"
+        app:layout_constraintTop_toBottomOf="@+id/btn_ago" />
+
+    <TextView
+        android:id="@+id/lbl_ano"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="2021"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
