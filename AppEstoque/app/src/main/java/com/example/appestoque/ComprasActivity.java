@@ -70,7 +70,8 @@ public class ComprasActivity extends AppCompatActivity {
         }
         valortotal = 0;
         dao.deletarTodaCompras();
-        Intent it = new Intent(this, EstoqueActivity.class);
+        Toast.makeText( this,"Compra realizada!",Toast.LENGTH_SHORT ).show();
+        Intent it = new Intent(this, MainScreenActivity.class);
         startActivity( it );
     }
 
@@ -145,5 +146,10 @@ public class ComprasActivity extends AppCompatActivity {
         Date data = calendar.getTime();
 
         return formato.format(data);
+    }
+
+    public void telainicial (View v) {
+        Intent it = new Intent(this, MainScreenActivity.class);
+        startActivity( it );
     }
 }

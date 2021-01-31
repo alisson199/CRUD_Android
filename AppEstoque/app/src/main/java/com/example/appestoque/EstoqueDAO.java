@@ -77,6 +77,46 @@ public class EstoqueDAO {
 
     public void inserirRelatorios(Produtos produtos, String data)
     {
+        Cursor aux = banco.query( "tb_produtos", new String[]{"id", "nm_produtos", "qt_produtos", "qt_min_produtos", "preco"},
+                "nm_produtos = ?",new String []{produtos.getNome()}, null, null, null, null);
+        boolean achouproduto = false;
+        int qtcont = 0;
+        if(aux.getCount() > 0) {
+            while (aux.moveToNext()){
+                String preco = aux.getString( 4 );
+                if ( Double.parseDouble( preco ) == Double.parseDouble( produtos.getValor() )) {
+                    qtcont = Integer.parseInt( aux.getString( 2 ) ) + Integer.parseInt( produtos.getQt_produtos() );
+                    produtos.setQt_produtos( Integer.toString( qtcont ) );
+                    aux.close();
+                    ContentValues values = new ContentValues();
+
+                    values.put( "nm_prod", produtos.getNome() );
+                    values.put( "qt_prod", produtos.getQt_produtos() );
+                    values.put( "qt_min_prod", produtos.getQt_min_estoque() );
+                    values.put( "vlr", produtos.getValor() );
+                    values.put("data", data);
+                    banco.update( "tb_relatorios", values, "preco = ?",
+                            new String[]{
+                                    produtos.getValor()
+                            } );
+                    achouproduto = true;
+                }
+            }
+        }
+        if (!achouproduto){
+            ContentValues values = new ContentValues();
+
+            values.put( "nm_prod", produtos.getNome() );
+            values.put( "qt_prod", produtos.getQt_produtos() );
+            values.put( "qt_min_prod", produtos.getQt_min_estoque() );
+            values.put( "vlr", produtos.getValor() );
+            values.put("data", data);
+
+            banco.insert( "tb_relatorios", null, values );
+
+        }
+        aux.close();
+        /*
         ContentValues values = new ContentValues();
 
         values.put( "nm_prod", produtos.getNome() );
@@ -86,6 +126,8 @@ public class EstoqueDAO {
         values.put("data", data);
 
         banco.insert( "tb_relatorios", null, values );
+
+        */
     }
 
     public List<Produtos> obterEstoque () {
@@ -150,7 +192,7 @@ public class EstoqueDAO {
 
     public String obterTotalMensal(String mes, String ano) {
         double total = 0;
-        String data = ano + "/" +mes;
+        String data = ano + "/" + mes;
         Cursor cursor = banco.query( "tb_relatorios", new String[]{"rid", "nm_prod", "qt_prod", "qt_min_prod", "vlr","data"},
                 "data = ?",new String[]{data}, null, null, null, null);
         while (cursor.moveToNext()) {
@@ -158,6 +200,24 @@ public class EstoqueDAO {
         }
         cursor.close();
         return Double.toString( total );
+    }
+
+    public List<Produtos> obterRelatorios(String mes, String ano) {
+        List<Produtos> produtos = new ArrayList <>();
+        String data = ano + "/" + mes;
+        Cursor cursor = banco.query( "tb_relatorios", new String[]{"rid", "nm_prod", "qt_prod", "qt_min_prod", "vlr","data"},
+                "data = ?",new String[]{data}, null, null, null, null);
+
+        while (cursor.moveToNext()) {
+            Produtos p = new Produtos();
+            p.setId( cursor.getInt( 0 ) );
+            p.setNome( cursor.getString( 1 ) );
+            p.setQt_produtos( cursor.getString( 2 ) );
+            p.setQt_min_estoque( cursor.getString( 3 ) );
+            p.setValor( cursor.getString( 4 ));
+            produtos.add( p );
+        }
+        return produtos;
     }
 
     public String excluirCompra (Produtos p) {
