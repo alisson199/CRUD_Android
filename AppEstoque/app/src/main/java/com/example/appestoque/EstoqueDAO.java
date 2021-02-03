@@ -77,8 +77,8 @@ public class EstoqueDAO {
 
     public void inserirRelatorios(Produtos produtos, String data)
     {
-        Cursor aux = banco.query( "tb_produtos", new String[]{"id", "nm_produtos", "qt_produtos", "qt_min_produtos", "preco"},
-                "nm_produtos = ?",new String []{produtos.getNome()}, null, null, null, null);
+        Cursor aux = banco.query( "tb_relatorios", new String[]{"rid", "nm_prod", "qt_prod", "qt_min_prod", "vlr"},
+                "nm_prod = ?",new String []{produtos.getNome()}, null, null, null, null);
         boolean achouproduto = false;
         int qtcont = 0;
         if(aux.getCount() > 0) {
@@ -95,7 +95,7 @@ public class EstoqueDAO {
                     values.put( "qt_min_prod", produtos.getQt_min_estoque() );
                     values.put( "vlr", produtos.getValor() );
                     values.put("data", data);
-                    banco.update( "tb_relatorios", values, "preco = ?",
+                    banco.update( "tb_relatorios", values, "vlr = ?",
                             new String[]{
                                     produtos.getValor()
                             } );
@@ -190,13 +190,21 @@ public class EstoqueDAO {
         return produtos;
     }
 
+    public int temItem () {
+        Cursor cursor = banco.query( "tb_ListaCompras", new String[] { "lcid", "nm_produto",
+                        "qt_produto", "qt_min_produto", "valor"},
+                null, null, null, null, null);
+
+        return cursor.getCount();
+    }
+
     public String obterTotalMensal(String mes, String ano) {
         double total = 0;
         String data = ano + "/" + mes;
         Cursor cursor = banco.query( "tb_relatorios", new String[]{"rid", "nm_prod", "qt_prod", "qt_min_prod", "vlr","data"},
                 "data = ?",new String[]{data}, null, null, null, null);
         while (cursor.moveToNext()) {
-            total += Double.parseDouble( cursor.getString( 4 ) );
+            total += Integer.parseInt( cursor.getString( 2 ) ) * Double.parseDouble( cursor.getString( 4 ) );
         }
         cursor.close();
         return Double.toString( total );

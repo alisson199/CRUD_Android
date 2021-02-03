@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,7 +53,8 @@ public class RelatorioMensalActivity extends AppCompatActivity {
         listView.setAdapter( adaptador );
 
         TextView gasto = findViewById( R.id.lbl_valorTotal );
-        gasto.setText( gastoMensal );
+        String moeda = new DecimalFormat("#,##0.00").format( Double.parseDouble( gastoMensal ));
+        gasto.setText( moeda);
 
         listView.setAdapter( adaptador );
     }

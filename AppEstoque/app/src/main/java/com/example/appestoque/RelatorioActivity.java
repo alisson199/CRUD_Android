@@ -12,8 +12,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
+
+import java.util.Calendar;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class RelatorioActivity extends AppCompatActivity {
 
@@ -27,12 +32,29 @@ public class RelatorioActivity extends AppCompatActivity {
 
         dao = new EstoqueDAO( this );
 
+        TextView textoano = findViewById( R.id.lbl_ano );
 
+        textoano.setText( getTime( "YYYY" ) );
+
+
+    }
+    private static String getTime(String format){
+
+        if (format.isEmpty()) {
+            throw new NullPointerException("A pattern não pode ser NULL!");
+        }
+
+        Calendar calendar = Calendar.getInstance();
+
+        SimpleDateFormat formato = new SimpleDateFormat(format);
+        Date data = calendar.getTime();
+
+        return formato.format(data);
     }
 
     public String ano () {
-        TextView a = findViewById( R.id.lbl_ano );
-        return (String) a.getText();
+        TextView a = findViewById( R.id.lbl_ano ); //Captura a label ano...
+        return (String) a.getText(); // retorna o texto dela..
     }
 
     public void mes1 (View v) {

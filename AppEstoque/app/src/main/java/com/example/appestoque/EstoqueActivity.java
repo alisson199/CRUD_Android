@@ -31,18 +31,12 @@ public class EstoqueActivity extends AppCompatActivity {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_estoque );
 
-        //Capturando a list view
-        listView = findViewById( R.id.listEstoque );
-        //Instanciando um dao
-        dao = new EstoqueDAO( this );
-        //Capturando estoque do dao
-        produtos = dao.obterEstoque();
-        //Criando um menu de contexto
-        registerForContextMenu( listView );
-        //Adicionando todos os produtos obtidos do dao, ao filtro
-        filtroprodutos.addAll( produtos );
-        //Adaptando a matriz para inserir na lista de uma maneira mais visual
-        ProdutosAdapter adaptador = new ProdutosAdapter( filtroprodutos, this  );
+        listView = findViewById( R.id.listEstoque );  //Capturando a list view
+        dao = new EstoqueDAO( this );   //Instanciando um dao
+        produtos = dao.obterEstoque();    //Capturando estoque do dao
+        registerForContextMenu( listView );   //Criando um menu de context
+        filtroprodutos.addAll( produtos );    //Adicionando todos os produtos obtidos do dao, ao filtro
+        ProdutosAdapter adaptador = new ProdutosAdapter( filtroprodutos, this  );    //Adaptando a matriz para inserir na lista de uma maneira mais visual
         listView.setAdapter( adaptador );
     }
 

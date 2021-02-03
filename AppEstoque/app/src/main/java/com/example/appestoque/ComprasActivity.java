@@ -3,6 +3,7 @@ package com.example.appestoque;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -69,10 +70,15 @@ public class ComprasActivity extends AppCompatActivity {
             dao.inserirRelatorios( filtroprodutos.get( i ), data );
         }
         valortotal = 0;
-        dao.deletarTodaCompras();
-        Toast.makeText( this,"Compra realizada!",Toast.LENGTH_SHORT ).show();
-        Intent it = new Intent(this, MainScreenActivity.class);
-        startActivity( it );
+            if(dao.temItem()>0){
+            dao.deletarTodaCompras();
+            Toast.makeText( this,"Compra realizada!",Toast.LENGTH_SHORT ).show();
+            Intent it = new Intent(this, MainScreenActivity.class);
+            startActivity( it );
+        } else
+            {
+                Toast.makeText( this,"Não há itens na lista de compras!",Toast.LENGTH_LONG ).show();
+            }
     }
 
     @Override
