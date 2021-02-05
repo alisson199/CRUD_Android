@@ -191,11 +191,32 @@ public class EstoqueDAO {
     }
 
     public int temItem () {
+        int contador = 0;
         Cursor cursor = banco.query( "tb_ListaCompras", new String[] { "lcid", "nm_produto",
                         "qt_produto", "qt_min_produto", "valor"},
                 null, null, null, null, null);
 
-        return cursor.getCount();
+        contador = cursor.getCount();
+        cursor.close();
+        cursor = banco.query( "tb_produtos", new String[]{"id", "nm_produtos", "qt_produtos", "qt_min_produtos", "preco"},
+                null, null, null, null, null);
+        while(cursor.moveToNext()){
+            Produtos p = new Produtos();
+            p.setId( cursor.getInt( 0 ) );
+            p.setNome( cursor.getString( 1 ) );
+            p.setQt_produtos( cursor.getString( 2 ) );
+            p.setQt_min_estoque( cursor.getString( 3 ) );
+            p.setValor( cursor.getString( 4 ));
+
+            //Se a quantidade minima é maior que a quantidade existente, então adicione.
+            if(Integer.parseInt( p.getQt_produtos() ) < Integer.parseInt( p.getQt_min_estoque() ))
+            {
+                contador += 1;
+            }
+        }
+        cursor.close();
+
+        return contador;
     }
 
     public String obterTotalMensal(String mes, String ano) {

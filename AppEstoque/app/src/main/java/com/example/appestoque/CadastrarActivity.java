@@ -79,8 +79,11 @@ public class CadastrarActivity extends AppCompatActivity {
         }
 
         //Voltando para activity da lista de compras
-        Intent it = new Intent(this, ComprasActivity.class);
-        startActivity( it );;
+        finish();
+    }
+    @Override
+    public void onBackPressed(){
+        finish();
     }
 
 }

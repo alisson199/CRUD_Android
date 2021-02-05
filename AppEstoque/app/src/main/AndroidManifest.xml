@@ -9,16 +9,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppEstoque">
-        <activity android:name=".MainScreenActivity"></activity>
-        <activity android:name=".RelatorioMensalActivity" />
-        <activity android:name=".RelatorioActivity" />
-        <activity android:name=".ComprasActivity">
+        <activity android:name=".MainScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".RelatorioMensalActivity" />
+        <activity android:name=".RelatorioActivity" />
+        <activity android:name=".ComprasActivity"/>
         <activity android:name=".EstoqueActivity" />
         <activity android:name=".CadastrarActivity" />
     </application>

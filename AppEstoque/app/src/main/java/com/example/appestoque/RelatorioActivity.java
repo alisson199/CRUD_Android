@@ -154,7 +154,10 @@ public class RelatorioActivity extends AppCompatActivity {
     }
 
     public void telainicial (View v) {
-        Intent it = new Intent(this, MainScreenActivity.class);
-        startActivity( it );
+        finish();
+    }
+    @Override
+    public void onBackPressed(){
+        finish();
     }
 }

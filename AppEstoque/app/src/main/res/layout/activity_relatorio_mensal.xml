@@ -73,7 +73,7 @@
         app:fabSize="mini"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/_9524" />
+        app:srcCompat="@drawable/abc_vector_test" />
 
     <TextView
         android:id="@+id/lbl_valorTotal"

@@ -59,7 +59,10 @@ public class RelatorioMensalActivity extends AppCompatActivity {
         listView.setAdapter( adaptador );
     }
     public void telainicial (View v) {
-        Intent it = new Intent(this, MainScreenActivity.class);
-        startActivity( it );
+        finish();
+    }
+    @Override
+    public void onBackPressed(){
+        finish();
     }
 }

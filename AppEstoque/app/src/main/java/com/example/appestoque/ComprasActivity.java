@@ -63,22 +63,21 @@ public class ComprasActivity extends AppCompatActivity {
     }
 
     public void comprar (View v) {
-        String data = getTime( "YYYY/MM" );
+        if (dao.temItem() > 0){
+            String data = getTime( "YYYY/MM" );
 
-        for(int i = 0; i < filtroprodutos.size(); i ++) {
-            dao.inserirEstoque( filtroprodutos.get( i ) );
-            dao.inserirRelatorios( filtroprodutos.get( i ), data );
-        }
-        valortotal = 0;
-            if(dao.temItem()>0){
-            dao.deletarTodaCompras();
-            Toast.makeText( this,"Compra realizada!",Toast.LENGTH_SHORT ).show();
-            Intent it = new Intent(this, MainScreenActivity.class);
-            startActivity( it );
-        } else
-            {
-                Toast.makeText( this,"Não há itens na lista de compras!",Toast.LENGTH_LONG ).show();
+            for (int i = 0; i < filtroprodutos.size(); i++) {
+                dao.inserirEstoque( filtroprodutos.get( i ) );
+                dao.inserirRelatorios( filtroprodutos.get( i ), data );
             }
+            valortotal = 0;
+
+            dao.deletarTodaCompras();
+            Toast.makeText( this, "Compra realizada!", Toast.LENGTH_SHORT ).show();
+            finish();
+        } else {
+            Toast.makeText( this, "Não há itens na lista de compras!", Toast.LENGTH_LONG ).show();
+        }
     }
 
     @Override
@@ -155,7 +154,10 @@ public class ComprasActivity extends AppCompatActivity {
     }
 
     public void telainicial (View v) {
-        Intent it = new Intent(this, MainScreenActivity.class);
-        startActivity( it );
+        finish();
+    }
+    @Override
+    public void onBackPressed(){
+        finish();
     }
 }
