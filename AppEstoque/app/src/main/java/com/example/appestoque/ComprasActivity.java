@@ -44,6 +44,7 @@ public class ComprasActivity extends AppCompatActivity {
 
         listView = findViewById( R.id.listCompras );
         dao = new EstoqueDAO( this );
+        dao.inserirCompras();
         produtos = dao.obterCompras();
         valortotal = 0;
         totpreco = findViewById( R.id.lbl_totPreco );
@@ -67,11 +68,11 @@ public class ComprasActivity extends AppCompatActivity {
             String data = getTime( "YYYY/MM" );
 
             for (int i = 0; i < filtroprodutos.size(); i++) {
+
                 dao.inserirEstoque( filtroprodutos.get( i ) );
                 dao.inserirRelatorios( filtroprodutos.get( i ), data );
             }
             valortotal = 0;
-
             dao.deletarTodaCompras();
             Toast.makeText( this, "Compra realizada!", Toast.LENGTH_SHORT ).show();
             finish();

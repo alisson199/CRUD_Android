@@ -26,6 +26,7 @@ public class EstoqueDAO {
                 "nm_produtos = ?",new String []{produtos.getNome()}, null, null, null, null);
         boolean achouproduto = false;
         int qtcont = 0;
+
         if(aux.getCount() > 0) {
             while (aux.moveToNext()){
                 String preco = aux.getString( 4 );
@@ -60,8 +61,8 @@ public class EstoqueDAO {
     }
 
     public String inserirCompras (Produtos produtos) {
-        ContentValues values = new ContentValues();
 
+        ContentValues values = new ContentValues();
         values.put( "nm_produto", produtos.getNome() );
         values.put( "qt_produto", produtos.getQt_produtos() );
         values.put( "qt_min_produto", produtos.getQt_min_estoque() );
@@ -79,44 +80,7 @@ public class EstoqueDAO {
     {
         Cursor aux = banco.query( "tb_relatorios", new String[]{"rid", "nm_prod", "qt_prod", "qt_min_prod", "vlr"},
                 "nm_prod = ?",new String []{produtos.getNome()}, null, null, null, null);
-        boolean achouproduto = false;
-        int qtcont = 0;
-        if(aux.getCount() > 0) {
-            while (aux.moveToNext()){
-                String preco = aux.getString( 4 );
-                if ( Double.parseDouble( preco ) == Double.parseDouble( produtos.getValor() )) {
-                    qtcont = Integer.parseInt( aux.getString( 2 ) ) + Integer.parseInt( produtos.getQt_produtos() );
-                    produtos.setQt_produtos( Integer.toString( qtcont ) );
-                    aux.close();
-                    ContentValues values = new ContentValues();
 
-                    values.put( "nm_prod", produtos.getNome() );
-                    values.put( "qt_prod", produtos.getQt_produtos() );
-                    values.put( "qt_min_prod", produtos.getQt_min_estoque() );
-                    values.put( "vlr", produtos.getValor() );
-                    values.put("data", data);
-                    banco.update( "tb_relatorios", values, "vlr = ?",
-                            new String[]{
-                                    produtos.getValor()
-                            } );
-                    achouproduto = true;
-                }
-            }
-        }
-        if (!achouproduto){
-            ContentValues values = new ContentValues();
-
-            values.put( "nm_prod", produtos.getNome() );
-            values.put( "qt_prod", produtos.getQt_produtos() );
-            values.put( "qt_min_prod", produtos.getQt_min_estoque() );
-            values.put( "vlr", produtos.getValor() );
-            values.put("data", data);
-
-            banco.insert( "tb_relatorios", null, values );
-
-        }
-        aux.close();
-        /*
         ContentValues values = new ContentValues();
 
         values.put( "nm_prod", produtos.getNome() );
@@ -127,7 +91,7 @@ public class EstoqueDAO {
 
         banco.insert( "tb_relatorios", null, values );
 
-        */
+        aux.close();
     }
 
     public List<Produtos> obterEstoque () {
@@ -148,11 +112,10 @@ public class EstoqueDAO {
         return produtos;
     }
 
-    public List<Produtos> obterCompras () {
-        List<Produtos> produtos = new ArrayList <>();
+    public void inserirCompras(){
         //************************* tb Estoque
         Cursor cursor = banco.query( "tb_produtos", new String[]{"id", "nm_produtos", "qt_produtos", "qt_min_produtos", "preco"},
-                null, null, null, null, null);
+                "qt_produtos < qt_min_produtos", null, null, null, null, null);
 
         while(cursor.moveToNext()){
             Produtos p = new Produtos();
@@ -162,34 +125,53 @@ public class EstoqueDAO {
             p.setQt_min_estoque( cursor.getString( 3 ) );
             p.setValor( cursor.getString( 4 ));
 
-            //Se a quantidade minima é maior que a quantidade existente, então adicione.
-            if(Integer.parseInt( p.getQt_produtos() ) < Integer.parseInt( p.getQt_min_estoque() ))
-            {
-                int aux = Integer.parseInt( p.getQt_min_estoque()) - Integer.parseInt( p.getQt_produtos() );
-                p.setQt_produtos( Integer.toString( aux ) );
-                produtos.add( p );
+            int aux = Integer.parseInt( p.getQt_min_estoque()) - Integer.parseInt( p.getQt_produtos() ); //Ver quanto falta
+            p.setQt_produtos( Integer.toString( aux ) ); //Define a quantidade que falta.
+
+            if(temItemCompras() > 0){
+                atualizarCompra( p );
+            }else {
+                inserirCompras( p ); // Insere na lista de compras.
             }
         }
         cursor.close();
+    }
+    public List<Produtos> obterCompras () {
+
+
+
+        List<Produtos> produtos = new ArrayList <>();
 
         //********************** tb Lista Compras
-        cursor = banco.query( "tb_ListaCompras", new String[] { "lcid", "nm_produto",
+        Cursor cursor = banco.query( "tb_ListaCompras", new String[] { "lcid", "nm_produto",
                         "qt_produto", "qt_min_produto", "valor"},
                 null, null, null, null, null);
 
         while (cursor.moveToNext()) {
             Produtos p = new Produtos();
+
             p.setId( cursor.getInt( 0 ) );
             p.setNome( cursor.getString( 1 ) );
             p.setQt_produtos( cursor.getString( 2 ) );
             p.setQt_min_estoque( cursor.getString( 3 ) );
             p.setValor( cursor.getString( 4 ) );
+
             produtos.add( p );
         }
         cursor.close();
+
         return produtos;
     }
+    public int temItemCompras () {
+        int contador = 0;
+        Cursor cursor = banco.query( "tb_ListaCompras", new String[]{"lcid", "nm_produto",
+                        "qt_produto", "qt_min_produto", "valor"},
+                null, null, null, null, null );
 
+        contador = cursor.getCount();
+        cursor.close();
+        return contador;
+    }
     public int temItem () {
         int contador = 0;
         Cursor cursor = banco.query( "tb_ListaCompras", new String[] { "lcid", "nm_produto",

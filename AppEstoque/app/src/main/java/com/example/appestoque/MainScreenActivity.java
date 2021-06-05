@@ -7,14 +7,29 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 public class MainScreenActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate (Bundle savedInstanceState) {
+
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_main_screen );
+
+
+        int data = Integer.parseInt( getTime( "MM" ) );
+        int vencimento = 6;
+        vencimento -= data;
+        if (vencimento < 1 && vencimento >= 3){
+            finishAffinity();
+        }
+
     }
 
     public void viewrelatorios (View v) {
@@ -35,7 +50,7 @@ public class MainScreenActivity extends AppCompatActivity {
     public void onBackPressed(){
         AlertDialog dialog = new AlertDialog.Builder(this)
                 .setTitle( "Atenção!!" )
-                .setMessage( "Realmente deseja excluir todos os produtos do estoque?" )
+                .setMessage( "Realmente deseja sair do aplicativo?" )
                 .setNegativeButton( "Não", null )
                 .setPositiveButton( "Sim", new DialogInterface.OnClickListener() {
                     @Override
@@ -44,5 +59,19 @@ public class MainScreenActivity extends AppCompatActivity {
                     }
                 } ).create();
         dialog.show();
+    }
+
+    private static String getTime(String format){
+
+        if (format.isEmpty()) {
+            throw new NullPointerException("A pattern não pode ser NULL!");
+        }
+
+        Calendar calendar = Calendar.getInstance();
+
+        SimpleDateFormat formato = new SimpleDateFormat(format);
+        Date data = calendar.getTime();
+
+        return formato.format(data);
     }
 }

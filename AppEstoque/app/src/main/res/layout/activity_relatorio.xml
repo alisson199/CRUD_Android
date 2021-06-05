@@ -193,4 +193,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Button
+        android:id="@+id/btn_aumentar"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="100dp"
+        android:onClick="aumentar_ano"
+        app:icon="@android:drawable/arrow_up_float"
+        app:layout_constraintEnd_toEndOf="@+id/view2"
+        app:layout_constraintStart_toEndOf="@+id/lbl_ano"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_diminuir"
+        android:layout_width="50dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="100dp"
+        android:onClick="diminuir_ano"
+        app:backgroundTint="@color/azul_roxo"
+        app:icon="@android:drawable/arrow_down_float"
+        app:layout_constraintEnd_toStartOf="@+id/lbl_ano"
+        app:layout_constraintStart_toStartOf="@+id/view2"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

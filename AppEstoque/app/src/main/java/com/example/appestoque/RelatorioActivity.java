@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.strictmode.WebViewMethodCalledOnWrongThreadViolation;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -50,6 +51,19 @@ public class RelatorioActivity extends AppCompatActivity {
         Date data = calendar.getTime();
 
         return formato.format(data);
+    }
+
+    public void aumentar_ano(View v){
+        int ano = Integer.parseInt( ano() );
+        ano +=1;
+        TextView a = findViewById( R.id.lbl_ano );
+        a.setText( Integer.toString( ano ) );
+    }
+    public void diminuir_ano(View v){
+        int ano = Integer.parseInt( ano() );
+        ano -=1;
+        TextView a = findViewById( R.id.lbl_ano )   ;
+        a.setText( Integer.toString( ano ) );
     }
 
     public String ano () {

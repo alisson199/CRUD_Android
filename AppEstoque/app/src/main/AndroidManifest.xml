@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppEstoque">
-        <activity android:name=".MainScreenActivity">
+        <activity android:name=".usuario.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

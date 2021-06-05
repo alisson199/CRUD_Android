@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -52,6 +53,18 @@ public class CadastrarActivity extends AppCompatActivity {
 
     //Método para adicionar um novo produto ou atualizar
     public void adicionar (View v) {
+
+        //Verificações para caso esteja vazio.
+        if(quantidade.getText().length() <= 0){
+            quantidade.setText( "0" );
+        }
+        if(quantidadeMin.getText().length() <= 0){
+            quantidadeMin.setText( "0" );
+        }
+        if(preco.getText().length() <= 0){
+            preco.setText( "0" );
+        }
+
         //Verifica se é para adicionar um novo produto ou atualizar
         if(produto == null) {
             //Criando uma nova instancia de produto

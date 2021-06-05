@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "498713168600",
+    "project_id": "app-estoque-d9e37",
+    "storage_bucket": "app-estoque-d9e37.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:498713168600:android:3d80cd07fc4f764c9c65ad",
+        "android_client_info": {
+          "package_name": "com.example.appestoque"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "498713168600-l40nof1383bsjfsbbd5rhurgscltkhb0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCCPeLOxqxlZ9XE9evTunEi8NhdFu8d7Yg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "498713168600-l40nof1383bsjfsbbd5rhurgscltkhb0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

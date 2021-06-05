@@ -42,8 +42,6 @@ public class RelatorioMensalActivity extends AppCompatActivity {
         if(it.hasExtra( "ano" ))
             ano = (String) it.getSerializableExtra( "ano" );
 
-        Log.d("meu app", "Este é o ano: " + ano + " e Este o mes: " + mes);
-
         listView = findViewById( R.id.listRM );
         dao = new EstoqueDAO( this );
         produtos = dao.obterRelatorios( mes,ano );
@@ -58,6 +56,8 @@ public class RelatorioMensalActivity extends AppCompatActivity {
 
         listView.setAdapter( adaptador );
     }
+
+
     public void telainicial (View v) {
         finish();
     }

@@ -39,6 +39,7 @@ public class ConexaoBD extends SQLiteOpenHelper {
                 "vlr varchar(50), " +
                 "data varchar(30))");
 
+
     }
 
     @Override
@@ -48,7 +49,6 @@ public class ConexaoBD extends SQLiteOpenHelper {
         sql = "DROP TABLE IF EXISTS tb_listacompras";
         db.execSQL(sql);
         sql = "DROP TABLE IF EXISTS tb_relatorios";
-        db.execSQL(sql);
 
         onCreate(db);
     }
